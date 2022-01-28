@@ -57,7 +57,7 @@ class dirSelectDlg(Screen):
 		self.setPathName()
 
 	def updatePathName(self):
-		print self["filelist"].getFilename()
+		print(self["filelist"].getFilename())
 		try:
 			len(self["filelist"].getFilename())
 		except TypeError:
@@ -77,7 +77,7 @@ class dirSelectDlg(Screen):
 			self.epath = self.CurrentDirectory + self["filelist"].getFilename()
 		else:
 			self.epath = self["filelist"].getFilename()
-		print self.epath
+		print(self.epath)
 		if len(self.epath) > 1 and self.epath.endswith('/'):
 			self.epath = self.epath[:-1]
 		self["ButtonGreentext"].setText(_("select:") + " " + self.epath)

@@ -598,7 +598,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 		self.device = extra_args[0]
 		self.mountp = extra_args[1]
 		if len(result) == 0:
-			print "[MountManager] error get UUID for device %s" % self.device
+			print("[MountManager] error get UUID for device %s" % self.device)
 			return
 		self.device_uuid_tmp = result.split('UUID=')
 		if str(self.device_uuid_tmp) != "['']":
@@ -631,7 +631,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 			parts = des.strip().split('\t')
 			mountp = parts[1].replace(_("Mount: "), '')
 			device = parts[2].replace(_("Device: "), '')
-			print mountp
+			print(mountp)
 			if mountp == _("None"):
 				return
 			message = _('Really unmount ') + device + _(" from ") + mountp + " ?"
@@ -722,7 +722,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 		self.device = extra_args[0]
 		self.mountp = extra_args[1]
 		if len(result) == 0:
-			print "[MountManager] error get UUID for device %s" % self.device
+			print("[MountManager] error get UUID for device %s" % self.device)
 			return
 		self.device_uuid_tmp = result.split('UUID=')
 		if str(self.device_uuid_tmp) != "['']":
@@ -1323,7 +1323,7 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 		self.device = extra_args[0]
 		self.mountp = extra_args[1]
 		if len(result) == 0:
-			print "[MountManager] error get UUID for device %s" % self.device
+			print("[MountManager] error get UUID for device %s" % self.device)
 			return
 		self.device_uuid_tmp = result.split('UUID=')
 		if str(self.device_uuid_tmp) != "['']":
