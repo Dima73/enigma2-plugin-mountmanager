@@ -12,7 +12,7 @@ from Screens.MessageBox import MessageBox
 from Screens.Screen import Screen
 from Screens.ChoiceBox import ChoiceBox
 from Tools.Directories import fileExists
-from dirSelect import dirSelectDlg
+from .dirSelect import dirSelectDlg
 from enigma import RT_HALIGN_LEFT, RT_HALIGN_RIGHT, eListboxPythonMultiContent, gFont
 import os
 import skin
@@ -133,12 +133,12 @@ class fstabViewerScreen(Screen, HelpableScreen):
 			self.session.openWithCallback(self.writeFile, fstabEditorScreen, selectedEntry=self.selectedEntry)
 
 	def buildScreen(self):
+		global entryList, lenghtList
 		self.fstabEntryList = []
 		entryList = []
 		lengthList = [0, 0, 0, 0]
 		if fileExists("/etc/fstab"):
 			fstabFile = open("/etc/fstab", "r")
-			global entryList, lenghtList
 			self.counter = 0
 			for line in fstabFile:
 				if line[0] != "\n" and line[0] != "#":
@@ -377,7 +377,7 @@ class fstabEditorScreen(Screen, ConfigListScreen, HelpableScreen):
 			entryList[self.selectedEntry] = new_entry
 		try:
 			if not os.path.exists(self.mountpoint.value):
-				os.mkdir(self.mountpoint.value, 0755)
+				os.mkdir(self.mountpoint.value, 0o755)
 		except:
 			pass
 		self.close(1)

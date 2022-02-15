@@ -22,7 +22,7 @@ import fcntl
 import os
 from time import sleep
 from re import search
-import fstabViewer
+from . import fstabViewer
 
 plugin_version = "2.8"
 
@@ -582,7 +582,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 				devicemount = device[-5:]
 				mountdir = '/media/%s' % (devicemount)
 				if not os.path.exists(mountdir):
-					os.mkdir(mountdir, 0755)
+					os.mkdir(mountdir, 0o755)
 				system('mount ' + device + ' /media/%s' % (devicemount))
 				mountok = False
 				f = open('/proc/mounts', 'r')
@@ -730,7 +730,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 			self.device_uuid_tmp = self.device_uuid_tmp.replace('\n', "")
 			self.device_uuid = 'UUID=' + self.device_uuid_tmp
 			if not os.path.exists(self.mountp):
-				os.mkdir(self.mountp, 0755)
+				os.mkdir(self.mountp, 0o755)
 			flashexpander = None
 			if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/plugin.pyo") and fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/flashexpander.pyo"):
 				try:
@@ -1331,7 +1331,7 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 			self.device_uuid_tmp = self.device_uuid_tmp.replace('\n', "")
 			self.device_uuid = 'UUID=' + self.device_uuid_tmp
 			if not os.path.exists(self.mountp):
-				os.mkdir(self.mountp, 0755)
+				os.mkdir(self.mountp, 0o755)
 			flashexpander = None
 			if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/plugin.pyo") and fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/flashexpander.pyo"):
 				try:
