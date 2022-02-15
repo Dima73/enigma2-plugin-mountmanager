@@ -24,7 +24,7 @@ from time import sleep
 from re import search
 from . import fstabViewer
 
-plugin_version = "2.8"
+plugin_version = "2.9"
 
 # Equivalent of the _IO('U', 20) constant in the linux kernel.
 USBDEVFS_RESET = ord('U') << (4 * 2) | 20 # same as USBDEVFS_RESET= 21780
@@ -73,6 +73,16 @@ elif os.path.exists("/proc/stb/info/gbmodel") and not os.path.exists("/proc/stb/
 	try:
 		f = open("/proc/stb/info/gbmodel")
 		MODEL_NAME = f.read().strip()
+		f.close()
+	except:
+		pass
+
+if os.path.exists("/proc/stb/info/brandname"):
+	try:
+		f = open("/proc/stb/info/brandname")
+		brandname = f.read().strip()
+		if brandname == "Zgemma":
+			MODEL_NAME = brandname
 		f.close()
 	except:
 		pass
@@ -189,7 +199,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 				continue
 			device = parts[3]
 			mmc = False
-			if MODEL_NAME in ('sf8008', 'sf5008', 'sf8008m', 'et13000', 'et11000', 'et1x000', 'duo4k', 'duo4kse', 'uno4k', 'uno4kse', 'ultimo4k', 'solo4k', 'zero4k', 'hd51', 'hd52', 'dm820', 'dm7080', 'sf4008', 'dm900', 'dm920', 'gbquad4k', 'gbue4k', 'lunix3-4k', 'lunix-4k', 'vs1500', 'h7', '8100s', 'e4hd', 'gbmv200', 'multibox', 'multiboxse', 'h9se', 'h11', 'h9combo', 'h9combose', 'h9twin', 'h9twinse', 'h10', 'v8plus', 'hd60', 'hd61', 'pulse4k', 'pulse4kmini', 'dual') and search('mmcblk0p[1-9]', device):
+			if MODEL_NAME in ('Zgemma', 'sf8008', 'sf5008', 'sf8008m', 'et13000', 'et11000', 'et1x000', 'duo4k', 'duo4kse', 'uno4k', 'uno4kse', 'ultimo4k', 'solo4k', 'zero4k', 'hd51', 'hd52', 'dm820', 'dm7080', 'sf4008', 'dm900', 'dm920', 'gbquad4k', 'gbue4k', 'lunix3-4k', 'lunix-4k', 'vs1500', 'h7', '8100s', 'e4hd', 'gbmv200', 'multibox', 'multiboxse', 'h9se', 'h11', 'h9combo', 'h9combose', 'h9twin', 'h9twinse', 'h10', 'v8plus', 'hd60', 'hd61', 'hd66se', 'pulse4k', 'pulse4kmini', 'dual') and search('mmcblk0p[1-9]', device):
 				continue
 			if device and search('mmcblk[0-9]p[1-9]', device):
 				mmc = True
@@ -818,7 +828,7 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 				continue
 			device = parts[3]
 			mmc = False
-			if MODEL_NAME in ('sf8008', 'sf5008', 'sf8008m', 'et13000', 'et11000', 'et1x000', 'duo4k', 'duo4kse', 'uno4k', 'uno4kse', 'ultimo4k', 'solo4k', 'zero4k', 'hd51', 'hd52', 'dm820', 'dm7080', 'sf4008', 'dm900', 'dm920', 'gbquad4k', 'gbue4k', 'lunix3-4k', 'lunix-4k', 'vs1500', 'h7', '8100s', 'e4hd', 'gbmv200', 'multibox', 'multiboxse', 'h9se', 'h11', 'h9combo', 'h9combose', 'h9twin', 'h9twinse', 'h10', 'v8plus', 'hd60', 'hd61', 'pulse4k', 'pulse4kmini', 'dual') and search('mmcblk0p[1-9]', device):
+			if MODEL_NAME in ('Zgemma', 'sf8008', 'sf5008', 'sf8008m', 'et13000', 'et11000', 'et1x000', 'duo4k', 'duo4kse', 'uno4k', 'uno4kse', 'ultimo4k', 'solo4k', 'zero4k', 'hd51', 'hd52', 'dm820', 'dm7080', 'sf4008', 'dm900', 'dm920', 'gbquad4k', 'gbue4k', 'lunix3-4k', 'lunix-4k', 'vs1500', 'h7', '8100s', 'e4hd', 'gbmv200', 'multibox', 'multiboxse', 'h9se', 'h11', 'h9combo', 'h9combose', 'h9twin', 'h9twinse', 'h10', 'v8plus', 'hd60', 'hd61', 'hd66se', 'pulse4k', 'pulse4kmini', 'dual') and search('mmcblk0p[1-9]', device):
 				continue
 			if device and search('mmcblk[0-9]p[1-9]', device):
 				mmc = True
