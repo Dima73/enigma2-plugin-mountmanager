@@ -316,7 +316,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 			name = _("MMC: ")
 			card = True
 			try:
-				model = file('/sys/block/' + device2 + '/device/name').read()
+				model = open('/sys/block/' + device2 + '/device/name').read()
 				model = str(model).replace('\n', '')
 			except:
 				pass
@@ -324,7 +324,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 		else:
 			mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/icons/dev_usb.png'
 			try:
-				model = file('/sys/block/' + device2 + '/device/model').read()
+				model = open('/sys/block/' + device2 + '/device/model').read()
 				model = str(model).replace('\n', '')
 			except:
 				pass
@@ -409,7 +409,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 					des = _("Size: ") + str(size / 1024) + " " + _("MB")
 			else:
 				try:
-					size = file('/sys/block/' + device2 + '/' + device + '/size').read()
+					size = open('/sys/block/' + device2 + '/' + device + '/size').read()
 					size = str(size).replace('\n', '')
 					size = int(size)
 				except:
@@ -753,11 +753,11 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 					f.close()
 				except:
 					pass
-			file('/etc/fstab.tmp', 'w').writelines([l for l in file('/etc/fstab').readlines() if '/media/hdd' not in l])
+			open('/etc/fstab.tmp', 'w').writelines([l for l in open('/etc/fstab').readlines() if '/media/hdd' not in l])
 			os.rename('/etc/fstab.tmp', '/etc/fstab')
-			file('/etc/fstab.tmp', 'w').writelines([l for l in file('/etc/fstab').readlines() if self.device not in l])
+			open('/etc/fstab.tmp', 'w').writelines([l for l in open('/etc/fstab').readlines() if self.device not in l])
 			os.rename('/etc/fstab.tmp', '/etc/fstab')
-			file('/etc/fstab.tmp', 'w').writelines([l for l in file('/etc/fstab').readlines() if self.device_uuid not in l])
+			open('/etc/fstab.tmp', 'w').writelines([l for l in open('/etc/fstab').readlines() if self.device_uuid not in l])
 			os.rename('/etc/fstab.tmp', '/etc/fstab')
 			out = open('/etc/fstab', 'a')
 			line = self.device_uuid + '\t/media/hdd\tauto\tdefaults\t0  2\n'
@@ -944,13 +944,13 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 			name = "MMC: "
 			card = True
 			try:
-				model = file('/sys/block/' + device2 + '/device/name').read()
+				model = open('/sys/block/' + device2 + '/device/name').read()
 				model = str(model).replace('\n', '')
 			except:
 				pass
 		else:
 			try:
-				model = file('/sys/block/' + device2 + '/device/model').read()
+				model = open('/sys/block/' + device2 + '/device/model').read()
 				model = str(model).replace('\n', '')
 			except:
 				pass
@@ -1006,7 +1006,7 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 					des = _("Size: ") + str(size / 1024) + " " + _("MB")
 			else:
 				try:
-					size = file('/sys/block/' + device2 + '/' + device + '/size').read()
+					size = open('/sys/block/' + device2 + '/' + device + '/size').read()
 					size = str(size).replace('\n', '')
 					size = int(size)
 				except:
@@ -1139,9 +1139,9 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 					f.close()
 				except:
 					pass
-			file('/etc/fstab.tmp', 'w').writelines([l for l in file('/etc/fstab').readlines() if self.device not in l])
+			open('/etc/fstab.tmp', 'w').writelines([l for l in open('/etc/fstab').readlines() if self.device not in l])
 			os.rename('/etc/fstab.tmp', '/etc/fstab')
-			file('/etc/fstab.tmp', 'w').writelines([l for l in file('/etc/fstab').readlines() if self.device_uuid not in l])
+			open('/etc/fstab.tmp', 'w').writelines([l for l in open('/etc/fstab').readlines() if self.device_uuid not in l])
 			os.rename('/etc/fstab.tmp', '/etc/fstab')
 			if flashexpander is not None:
 				out = open('/etc/fstab', 'a')
@@ -1357,11 +1357,11 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 				except:
 					pass
 			#if self.mountp == '/media/hdd':
-			file('/etc/fstab.tmp', 'w').writelines([l for l in file('/etc/fstab').readlines() if self.mountp not in l])
+			open('/etc/fstab.tmp', 'w').writelines([l for l in open('/etc/fstab').readlines() if self.mountp not in l])
 			os.rename('/etc/fstab.tmp', '/etc/fstab')
-			file('/etc/fstab.tmp', 'w').writelines([l for l in file('/etc/fstab').readlines() if self.device not in l])
+			open('/etc/fstab.tmp', 'w').writelines([l for l in open('/etc/fstab').readlines() if self.device not in l])
 			os.rename('/etc/fstab.tmp', '/etc/fstab')
-			file('/etc/fstab.tmp', 'w').writelines([l for l in file('/etc/fstab').readlines() if self.device_uuid not in l])
+			open('/etc/fstab.tmp', 'w').writelines([l for l in open('/etc/fstab').readlines() if self.device_uuid not in l])
 			os.rename('/etc/fstab.tmp', '/etc/fstab')
 			out = open('/etc/fstab', 'a')
 			line = self.device_uuid + '\t' + self.mountp + '\tauto\tdefaults\t0  2\n'
