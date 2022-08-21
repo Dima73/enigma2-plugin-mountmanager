@@ -24,7 +24,7 @@ from time import sleep
 from re import search
 from . import fstabViewer
 
-plugin_version = "2.9"
+plugin_version = "3.0"
 
 # Equivalent of the _IO('U', 20) constant in the linux kernel.
 USBDEVFS_RESET = ord('U') << (4 * 2) | 20 # same as USBDEVFS_RESET= 21780
@@ -357,6 +357,8 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 			mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/icons/dev_usb_drive.png'
 		fullname = name + model
 		self.Console = Console()
+		self.Console.ePopen("opkg install util-linux-sfdisk > /dev/null")
+		sleep(0.5)
 		self.Console.ePopen("sfdisk -l /dev/sd? | grep swap | awk '{print $(NF-9)}' >/tmp/devices.tmp")
 		sleep(0.5)
 		try:
@@ -612,12 +614,21 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 		if len(result) == 0:
 			print("[MountManager] error get UUID for device %s" % self.device)
 			return
-		self.device_uuid_tmp = result.split('UUID=')
-		if str(self.device_uuid_tmp) != "['']":
+		self.device_tmp = result.split(' ')
+		if str(self.device_tmp) != "['']":
 			try:
-				self.device_uuid_tmp = self.device_uuid_tmp[1].replace('TYPE="ext2"', '').replace('TYPE="ext3"', '').replace('TYPE="ext4"', '').replace('TYPE="ntfs"', '').replace('TYPE="exfat"', '').replace('TYPE="vfat"', '').replace('"', '')
-				self.device_uuid_tmp = self.device_uuid_tmp.replace('\n', "")
-				self.device_uuid = 'UUID=' + self.device_uuid_tmp
+				if self.device_tmp[0].startswith('UUID='):
+					self.device_uuid = self.device_tmp[0].replace('"', "")
+					self.device_uuid = self.device_uuid.replace('\n', "")
+				elif self.device_tmp[1].startswith('UUID='):
+					self.device_uuid = self.device_tmp[1].replace('"', "")
+					self.device_uuid = self.device_uuid.replace('\n', "")
+				elif self.device_tmp[2].startswith('UUID='):
+					self.device_uuid = self.device_tmp[2].replace('"', "")
+					self.device_uuid = self.device_uuid.replace('\n', "")
+				elif self.device_tmp[3].startswith('UUID='):
+					self.device_uuid = self.device_tmp[3].replace('"', "")
+					self.device_uuid = self.device_uuid.replace('\n', "")
 				system('mount ' + self.device_uuid)
 				mountok = False
 				f = open('/proc/mounts', 'r')
@@ -736,11 +747,20 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 		if len(result) == 0:
 			print("[MountManager] error get UUID for device %s" % self.device)
 			return
-		self.device_uuid_tmp = result.split('UUID=')
-		if str(self.device_uuid_tmp) != "['']":
-			self.device_uuid_tmp = self.device_uuid_tmp[1].replace('TYPE="ext2"', '').replace('TYPE="ext3"', '').replace('TYPE="ext4"', '').replace('TYPE="ntfs"', '').replace('TYPE="exfat"', '').replace('TYPE="vfat"', '').replace('TYPE="xfs"', '').replace('"', '')
-			self.device_uuid_tmp = self.device_uuid_tmp.replace('\n', "")
-			self.device_uuid = 'UUID=' + self.device_uuid_tmp
+		self.device_tmp = result.split(' ')
+		if str(self.device_tmp) != "['']":
+			if self.device_tmp[0].startswith('UUID='):
+				self.device_uuid = self.device_tmp[0].replace('"', "")
+				self.device_uuid = self.device_uuid.replace('\n', "")
+			elif self.device_tmp[1].startswith('UUID='):
+				self.device_uuid = self.device_tmp[1].replace('"', "")
+				self.device_uuid = self.device_uuid.replace('\n', "")
+			elif self.device_tmp[2].startswith('UUID='):
+				self.device_uuid = self.device_tmp[2].replace('"', "")
+				self.device_uuid = self.device_uuid.replace('\n', "")
+			elif self.device_tmp[3].startswith('UUID='):
+				self.device_uuid = self.device_tmp[3].replace('"', "")
+				self.device_uuid = self.device_uuid.replace('\n', "")
 			if not os.path.exists(self.mountp):
 				os.mkdir(self.mountp, 0o755)
 			flashexpander = None
@@ -811,6 +831,8 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 		self.list = []
 		list2 = []
 		self.Console = Console()
+		self.Console.ePopen("opkg install util-linux-sfdisk > /dev/null")
+		sleep(0.5)
 		self.Console.ePopen("sfdisk -l /dev/sd? | grep swap | awk '{print $(NF-9)}' >/tmp/devices.tmp")
 		sleep(0.5)
 		try:
@@ -1124,11 +1146,20 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 			pass
 		else:
 			return
-		self.device_uuid_tmp = result.split('UUID=')
-		if str(self.device_uuid_tmp) != "['']":
-			self.device_uuid_tmp = self.device_uuid_tmp[1].replace('TYPE="ext2"', '').replace('TYPE="ext3"', '').replace('TYPE="ext4"', '').replace('TYPE="ntfs"', '').replace('TYPE="exfat"', '').replace('TYPE="vfat"', '').replace('TYPE="xfs"', '').replace('"', '')
-			self.device_uuid_tmp = self.device_uuid_tmp.replace('\n', "")
-			self.device_uuid = 'UUID=' + self.device_uuid_tmp
+		self.device_tmp = result.split(' ')
+		if str(self.device_tmp) != "['']":
+			if self.device_tmp[0].startswith('UUID='):
+				self.device_uuid = self.device_tmp[0].replace('"', "")
+				self.device_uuid = self.device_uuid.replace('\n', "")
+			elif self.device_tmp[1].startswith('UUID='):
+				self.device_uuid = self.device_tmp[1].replace('"', "")
+				self.device_uuid = self.device_uuid.replace('\n', "")
+			elif self.device_tmp[2].startswith('UUID='):
+				self.device_uuid = self.device_tmp[2].replace('"', "")
+				self.device_uuid = self.device_uuid.replace('\n', "")
+			elif self.device_tmp[3].startswith('UUID='):
+				self.device_uuid = self.device_tmp[3].replace('"', "")
+				self.device_uuid = self.device_uuid.replace('\n', "")
 			flashexpander = None
 			if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/plugin.pyo") and fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/flashexpander.pyo"):
 				try:
@@ -1339,11 +1370,47 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 		if len(result) == 0:
 			print("[MountManager] error get UUID for device %s" % self.device)
 			return
-		self.device_uuid_tmp = result.split('UUID=')
-		if str(self.device_uuid_tmp) != "['']":
-			self.device_uuid_tmp = self.device_uuid_tmp[1].replace('TYPE="ext2"', '').replace('TYPE="ext3"', '').replace('TYPE="ext4"', '').replace('TYPE="ntfs"', '').replace('TYPE="exfat"', '').replace('TYPE="vfat"', '').replace('TYPE="xfs"', '').replace('"', '')
-			self.device_uuid_tmp = self.device_uuid_tmp.replace('\n', "")
-			self.device_uuid = 'UUID=' + self.device_uuid_tmp
+		self.device_tmp = result.split(' ')
+		if str(self.device_tmp) != "['']":
+			if self.device_tmp[0].startswith('UUID='):
+				self.device_uuid = self.device_tmp[0].replace('"', "")
+				self.device_uuid = self.device_uuid.replace('\n', "")
+			elif self.device_tmp[1].startswith('UUID='):
+				self.device_uuid = self.device_tmp[1].replace('"', "")
+				self.device_uuid = self.device_uuid.replace('\n', "")
+			elif self.device_tmp[2].startswith('UUID='):
+				self.device_uuid = self.device_tmp[2].replace('"', "")
+				self.device_uuid = self.device_uuid.replace('\n', "")
+			elif self.device_tmp[3].startswith('UUID='):
+				self.device_uuid = self.device_tmp[3].replace('"', "")
+				self.device_uuid = self.device_uuid.replace('\n', "")
+			try:
+				if self.device_tmp[0].startswith('TYPE='):
+					self.device_type = self.device_tmp[0].replace('TYPE=', "")
+					self.device_type = self.device_type.replace('"', "")
+					self.device_type = self.device_type.replace('\n', "")
+				elif self.device_tmp[1].startswith('TYPE='):
+					self.device_type = self.device_tmp[1].replace('TYPE=', "")
+					self.device_type = self.device_type.replace('"', "")
+					self.device_type = self.device_type.replace('\n', "")
+				elif self.device_tmp[2].startswith('TYPE='):
+					self.device_type = self.device_tmp[2].replace('TYPE=', "")
+					self.device_type = self.device_type.replace('"', "")
+					self.device_type = self.device_type.replace('\n', "")
+				elif self.device_tmp[3].startswith('TYPE='):
+					self.device_type = self.device_tmp[3].replace('TYPE=', "")
+					self.device_type = self.device_type.replace('"', "")
+					self.device_type = self.device_type.replace('\n', "")
+				elif self.device_tmp[4].startswith('TYPE='):
+					self.device_type = self.device_tmp[4].replace('TYPE=', "")
+					self.device_type = self.device_type.replace('"', "")
+					self.device_type = self.device_type.replace('\n', "")
+			except:
+				self.device_type = 'auto'
+
+			if self.device_type.startswith('ext'):
+				self.device_type = 'auto'
+
 			if not os.path.exists(self.mountp):
 				os.mkdir(self.mountp, 0o755)
 			flashexpander = None
@@ -1356,7 +1423,6 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 					f.close()
 				except:
 					pass
-			#if self.mountp == '/media/hdd':
 			open('/etc/fstab.tmp', 'w').writelines([l for l in open('/etc/fstab').readlines() if self.mountp not in l])
 			os.rename('/etc/fstab.tmp', '/etc/fstab')
 			open('/etc/fstab.tmp', 'w').writelines([l for l in open('/etc/fstab').readlines() if self.device not in l])
@@ -1364,7 +1430,7 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 			open('/etc/fstab.tmp', 'w').writelines([l for l in open('/etc/fstab').readlines() if self.device_uuid not in l])
 			os.rename('/etc/fstab.tmp', '/etc/fstab')
 			out = open('/etc/fstab', 'a')
-			line = self.device_uuid + '\t' + self.mountp + '\tauto\tdefaults\t0  2\n'
+			line = self.device_uuid + '\t' + self.mountp + '\t' + self.device_type + '\tdefaults\t0 2\n'
 			if flashexpander is not None:
 				line += flashexpander
 			out.write(line)
