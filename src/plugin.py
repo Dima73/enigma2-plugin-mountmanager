@@ -400,15 +400,11 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 				parts = line.strip().split()
 				size = int(parts[2])
 				if (((float(size) / 1024) / 1024) / 1024) > 1:
-					des = _("Size: ") + str(round((((float(size) / 1024) / 1024) / 1024), 2)) + " " + _("TB")
+					des = "%s%s%s" % (_("Size: "), str(round((((float(size) / 1024) / 1024) / 1024), 2)), _("TB"))
 				elif ((size / 1024) / 1024) > 1:
-					capacity = (size / 1024) / 1024
-					des = _("Size: ") + str(capacity) + " " + _("GB")
-					#if capacity > 256 and name == _("USB: "):
-					#	mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/icons/dev_usb_drive.png'
-					#	partition = True
+					des = "%s%s%s" % (_("Size: "), str(round(((float(size) / 1024) / 1024), 2)), _("GB"))
 				else:
-					des = _("Size: ") + str(size / 1024) + " " + _("MB")
+					des = "%s%s%s" % (_("Size: "), str(round((float(size) / 1024), 2)), _("MB"))
 			else:
 				try:
 					size = open('/sys/block/' + device2 + '/' + device + '/size').read()
@@ -417,15 +413,11 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 				except:
 					size = 0
 				if ((((float(size) / 2) / 1024) / 1024) / 1024) > 1:
-					des = _("Size: ") + str(round(((((float(size) / 2) / 1024) / 1024) / 1024), 2)) + _("TB")
+					des = "%s%s%s" % (_("Size: "), str(round(((((float(size) / 2) / 1024) / 1024) / 1024), 2)), _("TB"))
 				elif (((size / 2) / 1024) / 1024) > 1:
-					capacity = ((size / 2) / 1024) / 1024
-					des = _("Size: ") + str(capacity) + " " + _("GB")
-					#if capacity > 256 and name == _("USB: "):
-					#	mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/icons/dev_usb_drive.png'
-					#	partition = True
+					des = "%s%s%s" % (_("Size: "), str(round((((float(size) / 2) / 1024) / 1024), 2)), _("GB"))
 				else:
-					des = _("Size: ") + str((size / 2) / 1024) + " " + _("MB")
+					des = "%s%s%s" % (_("Size: "), str(round(((float(size) / 2) / 1024), 2)), _("MB"))
 		f.close()
 		if des != '':
 			if rw.startswith('rw'):
@@ -1021,11 +1013,11 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 				parts = line.strip().split()
 				size = int(parts[2])
 				if (((float(size) / 1024) / 1024) / 1024) > 1:
-					des = _("Size: ") + str(round((((float(size) / 1024) / 1024) / 1024), 2)) + " " + _("TB")
+					des = "%s%s%s" % (_("Size: "), str(round((((float(size) / 1024) / 1024) / 1024), 2)), _("TB"))
 				elif ((size / 1024) / 1024) > 1:
-					des = _("Size: ") + str((size / 1024) / 1024) + " " + _("GB")
+					des = "%s%s%s" % (_("Size: "), str(round(((float(size) / 1024) / 1024), 2)), _("GB"))
 				else:
-					des = _("Size: ") + str(size / 1024) + " " + _("MB")
+					des = "%s%s%s" % (_("Size: "), str(round((float(size) / 1024), 2)), _("MB"))
 			else:
 				try:
 					size = open('/sys/block/' + device2 + '/' + device + '/size').read()
@@ -1034,11 +1026,11 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 				except:
 					size = 0
 				if ((((float(size) / 2) / 1024) / 1024) / 1024) > 1:
-					des = _("Size: ") + str(round(((((float(size) / 2) / 1024) / 1024) / 1024), 2)) + " " + _("TB")
+					des = "%s%s%s" % (_("Size: "), str(round(((((float(size) / 2) / 1024) / 1024) / 1024), 2)), _("TB"))
 				elif (((size / 2) / 1024) / 1024) > 1:
-					des = _("Size: ") + str(((size / 2) / 1024) / 1024) + " " + _("GB")
+					des = "%s%s%s" % (_("Size: "), str(round((((float(size) / 2) / 1024) / 1024), 2)), _("GB"))
 				else:
-					des = _("Size: ") + str((size / 2) / 1024) + " " + _("MB")
+					des = "%s%s%s" % (_("Size: "), str(round(((float(size) / 2) / 1024), 2)), _("MB"))
 		f.close()
 		choices = [('/media/' + device, '/media/' + device), ('/media/hdd', '/media/hdd'), ('/media/hdd2', '/media/hdd2'), ('/media/hdd3', '/media/hdd3'), ('/media/usb_hdd', '/media/usb_hdd'), ('/media/usb', '/media/usb'), ('/media/usb2', '/media/usb2'), ('/media/usb3', '/media/usb3')]
 		if 'MMC' in name:
