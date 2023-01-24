@@ -24,7 +24,7 @@ from time import sleep
 from re import search
 from . import fstabViewer
 
-plugin_version = "3.0"
+plugin_version = "3.1"
 
 # Equivalent of the _IO('U', 20) constant in the linux kernel.
 USBDEVFS_RESET = ord('U') << (4 * 2) | 20 # same as USBDEVFS_RESET= 21780
@@ -32,6 +32,7 @@ EXT_LSUSB = "/usr/bin/lsusb"
 update_usb_ids = "/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/update-usbids.sh"
 make_exfat = "/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/make-exfat.sh"
 umountfs = "/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/umountfs.sh"
+S99hdparm120 = "/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/S99hdparm120.sh"
 device2 = ''
 
 BOX_NAME = "none"
@@ -199,7 +200,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 				continue
 			device = parts[3]
 			mmc = False
-			if MODEL_NAME in ('Zgemma', 'sf8008', 'sf5008', 'sf8008m', 'et13000', 'et11000', 'et1x000', 'duo4k', 'duo4kse', 'uno4k', 'uno4kse', 'ultimo4k', 'solo4k', 'zero4k', 'hd51', 'hd52', 'dm820', 'dm7080', 'sf4008', 'dm900', 'dm920', 'gbquad4k', 'gbue4k', 'lunix3-4k', 'lunix-4k', 'vs1500', 'h7', '8100s', 'e4hd', 'gbmv200', 'multibox', 'multiboxse', 'h9se', 'h11', 'h9combo', 'h9combose', 'h9twin', 'h9twinse', 'h10', 'v8plus', 'hd60', 'hd61', 'hd66se', 'pulse4k', 'pulse4kmini', 'dual') and search('mmcblk0p[1-9]', device):
+			if MODEL_NAME in ('Zgemma', 'sfx6008', 'sf8008', 'sf5008', 'sf8008m', 'et13000', 'et11000', 'et1x000', 'duo4k', 'duo4kse', 'uno4k', 'uno4kse', 'ultimo4k', 'solo4k', 'zero4k', 'hd51', 'hd52', 'dm820', 'dm7080', 'sf4008', 'dm900', 'dm920', 'gbquad4k', 'gbue4k', 'lunix3-4k', 'lunix-4k', 'vs1500', 'h7', '8100s', 'e4hd', 'gbmv200', 'multibox', 'multiboxse', 'h9se', 'h11', 'h9combo', 'h9combose', 'h9twin', 'h9twinse', 'h10', 'v8plus', 'hd60', 'hd61', 'hd66se', 'pulse4k', 'pulse4kmini', 'dual') and search('mmcblk0p[1-9]', device):
 				continue
 			if MODEL_NAME in ('xc7439', 'osmio4k', 'osmio4kplus', 'osmini4k') and search('mmcblk1p[1-9]', device):
 				continue
@@ -357,8 +358,9 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 			mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/icons/dev_usb_drive.png'
 		fullname = name + model
 		self.Console = Console()
-		self.Console.ePopen("opkg install util-linux-sfdisk > /dev/null")
-		sleep(0.5)
+		if not os.path.exists("/usr/sbin/sfdisk"):
+			self.Console.ePopen("opkg install util-linux-sfdisk > /dev/null")
+			sleep(0.5)
 		self.Console.ePopen("sfdisk -l /dev/sd? | grep swap | awk '{print $(NF-9)}' >/tmp/devices.tmp")
 		sleep(0.5)
 		try:
@@ -823,8 +825,6 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 		self.list = []
 		list2 = []
 		self.Console = Console()
-		self.Console.ePopen("opkg install util-linux-sfdisk > /dev/null")
-		sleep(0.5)
 		self.Console.ePopen("sfdisk -l /dev/sd? | grep swap | awk '{print $(NF-9)}' >/tmp/devices.tmp")
 		sleep(0.5)
 		try:
@@ -844,7 +844,7 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 				continue
 			device = parts[3]
 			mmc = False
-			if MODEL_NAME in ('Zgemma', 'sf8008', 'sf5008', 'sf8008m', 'et13000', 'et11000', 'et1x000', 'duo4k', 'duo4kse', 'uno4k', 'uno4kse', 'ultimo4k', 'solo4k', 'zero4k', 'hd51', 'hd52', 'dm820', 'dm7080', 'sf4008', 'dm900', 'dm920', 'gbquad4k', 'gbue4k', 'lunix3-4k', 'lunix-4k', 'vs1500', 'h7', '8100s', 'e4hd', 'gbmv200', 'multibox', 'multiboxse', 'h9se', 'h11', 'h9combo', 'h9combose', 'h9twin', 'h9twinse', 'h10', 'v8plus', 'hd60', 'hd61', 'hd66se', 'pulse4k', 'pulse4kmini', 'dual') and search('mmcblk0p[1-9]', device):
+			if MODEL_NAME in ('Zgemma', 'sfx6008', 'sf8008', 'sf5008', 'sf8008m', 'et13000', 'et11000', 'et1x000', 'duo4k', 'duo4kse', 'uno4k', 'uno4kse', 'ultimo4k', 'solo4k', 'zero4k', 'hd51', 'hd52', 'dm820', 'dm7080', 'sf4008', 'dm900', 'dm920', 'gbquad4k', 'gbue4k', 'lunix3-4k', 'lunix-4k', 'vs1500', 'h7', '8100s', 'e4hd', 'gbmv200', 'multibox', 'multiboxse', 'h9se', 'h11', 'h9combo', 'h9combose', 'h9twin', 'h9twinse', 'h10', 'v8plus', 'hd60', 'hd61', 'hd66se', 'pulse4k', 'pulse4kmini', 'dual') and search('mmcblk0p[1-9]', device):
 				continue
 			if MODEL_NAME in ('xc7439', 'osmio4k', 'osmio4kplus', 'osmini4k') and search('mmcblk1p[1-9]', device):
 				continue
@@ -1195,6 +1195,10 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 			mylist.append((_("update usb.ids (www.linux-usb.org)"), self.action12))
 		if not self.spinDown() and fileExists('/etc/init.d/umountfs'):
 			mylist.append((_("Spin down HDD before shutdown box"), self.action18))
+		if not fileExists('/etc/rcS.d/S99hdparm120.sh'):
+			mylist.append((_("Add standby HDD via 10 min. (hdparm)"), self.action19))
+		else:
+			mylist.append((_("Remove standby HDD via 10 min. (hdparm)"), self.action20))
 		self.session.openWithCallback(self.menuCallback, ChoiceBox, list=mylist, title=_("Select system info or install module:"))
 
 	def action1(self):
@@ -1268,6 +1272,14 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 	def action18(self):
 		from Screens.Console import Console as myConsole
 		self.session.open(myConsole, _("*****Spin down HDD*****"), ["cp %s /etc/init.d/umountfs && chmod 755 /etc/init.d/umountfs && cat /etc/init.d/umountfs" % umountfs])
+
+	def action19(self):
+		from Screens.Console import Console as myConsole
+		self.session.open(myConsole, _("Add standby HDD via 10 min. (hdparm)"), ["cp %s /etc/rcS.d/S99hdparm120.sh && chmod 755 /etc/rcS.d/S99hdparm120.sh && cat /etc/rcS.d/S99hdparm120.sh" % S99hdparm120])
+
+	def action20(self):
+		from Screens.Console import Console as myConsole
+		self.session.open(myConsole, _("Remove standby HDD via 10 min. (hdparm)"), ["rm -rf /etc/rcS.d/S99hdparm120.sh && echo 'Done...\nNeed reboot box!'"])
 
 	def spinDown(self):
 		try:
