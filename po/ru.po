@@ -423,7 +423,7 @@ msgid "Spin down HDD before shutdown box"
 msgstr "Корректная остановка HDD перед выключением ресивера"
 
 msgid "Add standby HDD via 10 min. (hdparm)"
-msgstr "Добааить - сон HDD через 10 мин. (hdparm)"
+msgstr "Добавить - сон HDD через 10 мин. (hdparm)"
 
 msgid "Remove standby HDD via 10 min. (hdparm)"
 msgstr "Удалить - сон HDD через 10 мин. (hdparm)"

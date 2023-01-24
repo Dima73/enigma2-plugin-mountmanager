@@ -598,3 +598,9 @@ msgstr ""
 
 msgid "Spin down HDD before shutdown box"
 msgstr ""
+
+msgid "Add standby HDD via 10 min. (hdparm)"
+msgstr ""
+
+msgid "Remove standby HDD via 10 min. (hdparm)"
+msgstr ""
