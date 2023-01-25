@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-03-11 20:45+0200\n"
-"PO-Revision-Date: 2018-01-12 21:23+0100\n"
+"PO-Revision-Date: 2023-01-25 10:30+0100\n"
+"Last-Translator: Pr2\n"
 "Language-Team: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.5\n"
-"Last-Translator: Pr2\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"Language: fr\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: plugin.py:1000
 msgid " as "
@@ -118,8 +118,8 @@ msgid ""
 "Can't unmount partiton, make sure it is not being used for swap or record/"
 "timeshift paths!"
 msgstr ""
-"Impossible de démonter la partition, assurez-vous qu’elle n’est pas "
-"utilisée pour le swap ou comme chemin d’enregistrement/PauseDirect!"
+"Impossible de démonter la partition, assurez-vous qu’elle n’est pas utilisée "
+"pour le swap ou comme chemin d’enregistrement/PauseDirect!"
 
 #: fstabViewer.py:90 fstabViewer.py:277
 msgid "Cancel"
@@ -134,8 +134,7 @@ msgid ""
 msgstr ""
 "Ne peut pas le démonter de le périphérique précédent de /media/hdd.\n"
 "Un enregistrement en cours, une PauseDirect ou certains outils externes "
-"(tels que samba et nfsd, transmission, etc.) peuvent provoquer ce "
-"problème.\n"
+"(tels que samba et nfsd, transmission, etc.) peuvent provoquer ce problème.\n"
 "S’il vous plaît arrêter cette action/applications et réessayez !"
 
 #: fstabViewer.py:201
@@ -224,8 +223,8 @@ msgstr "Quitter"
 msgid ""
 "Failed to read /etc/fstab! Restore fstab.backup or edit the file manually."
 msgstr ""
-"Impossible de lire /etc/fstab! Restaurez fstab.backup ou éditez le "
-"fichier manuellement."
+"Impossible de lire /etc/fstab! Restaurez fstab.backup ou éditez le fichier "
+"manuellement."
 
 #: fstabViewer.py:51
 msgid "File system type:"
@@ -329,8 +328,8 @@ msgstr "Options :"
 #: fstabViewer.py:355
 msgid "Pass num value 1 use only for root filesystem (mountpoint '/')!"
 msgstr ""
-"Nombre de passe valeur 1 a utilisé uniquement sur le système de fichier "
-"root (point de montage ‘/‘)!"
+"Nombre de passe valeur 1 a utilisé uniquement sur le système de fichier root "
+"(point de montage ‘/‘)!"
 
 #: fstabViewer.py:54
 msgid "Pass number:"
@@ -502,8 +501,7 @@ msgstr ""
 #: plugin.py:408 plugin.py:569
 msgid "Warning, this device is used for more than one mount point!\n"
 msgstr ""
-"Avertissement, ce périphérique est utilisé par plus d’un point de "
-"montage!\n"
+"Avertissement, ce périphérique est utilisé par plus d’un point de montage!\n"
 
 #: plugin.py:922
 msgid "blkid"
@@ -632,3 +630,9 @@ msgstr ""
 
 msgid "Spin down HDD before shutdown box"
 msgstr "Arrêter le HDD avant d’éteindre le récepteur"
+
+msgid "Add standby HDD via 10 min. (hdparm)"
+msgstr "Ajout de la mise en veille du HDD après 10 min. (hdparm)"
+
+msgid "Remove standby HDD via 10 min. (hdparm)"
+msgstr "Suppression de la mise en veille du HDD après 10 min. (hdparm)"
