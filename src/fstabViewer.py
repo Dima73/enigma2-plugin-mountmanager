@@ -304,8 +304,8 @@ class fstabEditorScreen(Screen, ConfigListScreen, HelpableScreen):
 		self.list = []
 		ConfigListScreen.__init__(self, self.list, session=self.session)
 		self["VKeyIcon"] = Boolean(False)
-		self["HelpWindow"] = Pixmap()
-		self["HelpWindow"].hide()
+		#self["HelpWindow"] = Pixmap()
+		#self["HelpWindow"].hide()
 		if self.addEntry:
 			self.devicename = NoSave(ConfigText(default="", fixed_size=False))
 			self.mountpoint = NoSave(ConfigText(default="", fixed_size=False))

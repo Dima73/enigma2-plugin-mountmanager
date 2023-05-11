@@ -755,8 +755,8 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 			elif self.device_tmp[3].startswith('UUID='):
 				self.device_uuid = self.device_tmp[3].replace('"', "")
 				self.device_uuid = self.device_uuid.replace('\n', "")
-			if not os.path.exists(self.mountp):
-				os.mkdir(self.mountp, 0o755)
+			if not os.path.exists('/media/hdd'):
+				os.mkdir('/media/hdd', 0o755)
 			flashexpander = None
 			if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/plugin.pyo") and fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/flashexpander.pyo"):
 				try:
