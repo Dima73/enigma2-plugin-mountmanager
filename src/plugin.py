@@ -24,7 +24,7 @@ from time import sleep
 from re import search
 from . import fstabViewer
 
-plugin_version = "3.1"
+plugin_version = "3.2"
 
 # Equivalent of the _IO('U', 20) constant in the linux kernel.
 USBDEVFS_RESET = ord('U') << (4 * 2) | 20 # same as USBDEVFS_RESET= 21780
@@ -758,7 +758,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 			if not os.path.exists('/media/hdd'):
 				os.mkdir('/media/hdd', 0o755)
 			flashexpander = None
-			if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/plugin.pyo") and fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/flashexpander.pyo"):
+			if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/plugin.pyo") or fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/plugin.pyc"):
 				try:
 					f = open("/etc/fstab", 'r')
 					for line in f.readlines():
@@ -1037,7 +1037,7 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 			choices.append(('/media/mmc', '/media/mmc'))
 			choices.append(('/media/mmc1', '/media/mmc1'))
 			choices.append(('/media/mmc2', '/media/mmc2'))
-		if not fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/plugin.pyo") and not fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/flashexpander.pyo"):
+		if not fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/plugin.pyo") or not fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/plugin.pyc"):
 			if (removable and rotational) or (not removable and not rotational and card):
 				choices.append(('/usr', '/usr'))
 		item = NoSave(ConfigSelection(default='/media/' + device, choices=choices))
@@ -1153,7 +1153,7 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 				self.device_uuid = self.device_tmp[3].replace('"', "")
 				self.device_uuid = self.device_uuid.replace('\n', "")
 			flashexpander = None
-			if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/plugin.pyo") and fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/flashexpander.pyo"):
+			if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/plugin.pyo") or fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/plugin.pyc"):
 				try:
 					f = open("/etc/fstab", 'r')
 					for line in f.readlines():
@@ -1418,7 +1418,7 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 			if not os.path.exists(self.mountp):
 				os.mkdir(self.mountp, 0o755)
 			flashexpander = None
-			if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/plugin.pyo") and fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/flashexpander.pyo"):
+			if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/plugin.pyo") or fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/plugin.pyc"):
 				try:
 					f = open("/etc/fstab", 'r')
 					for line in f.readlines():
