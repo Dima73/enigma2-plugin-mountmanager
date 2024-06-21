@@ -24,7 +24,7 @@ from time import sleep
 from re import search
 from . import fstabViewer
 
-plugin_version = "3.2"
+plugin_version = "3.3"
 
 # Equivalent of the _IO('U', 20) constant in the linux kernel.
 USBDEVFS_RESET = ord('U') << (4 * 2) | 20 # same as USBDEVFS_RESET= 21780
@@ -356,7 +356,18 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 				mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/icons/dev_ssd.png'
 		if name == "USB: " and not removable and rotational:
 			mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/icons/dev_usb_drive.png'
-		fullname = name + model
+		try:
+			vendor = open('/sys/block/' + device2 + '/device/vendor').read()
+		except:
+			vendor = ""
+		if vendor and model:
+			fullname = name + vendor + " (" + model + ")"
+		elif vendor:
+			fullname = name + vendor
+		elif model:
+			fullname = name + model
+		else:
+			fullname = name +  "-?-"
 		self.Console = Console()
 		if not os.path.exists("/usr/sbin/sfdisk"):
 			self.Console.ePopen("opkg install util-linux-sfdisk > /dev/null")
@@ -994,7 +1005,18 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 				mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/icons/dev_ssd.png'
 		if name == "USB: " and not removable and rotational:
 			mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/icons/dev_usb_drive.png'
-		name = name + model
+		try:
+			vendor = open('/sys/block/' + device2 + '/device/vendor').read()
+		except:
+			vendor = ""
+		if vendor and model:
+			name = name + vendor + " (" + model + ")"
+		elif vendor:
+			name = name + vendor
+		elif model:
+			name = name + model
+		else:
+			name = name +  "-?-"
 		f = open('/proc/mounts', 'r')
 		for line in f.readlines():
 			if line.find(device) != -1 and '/omb' not in line:
