@@ -317,7 +317,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 			name = _("MMC: ")
 			card = True
 			try:
-				model = open('/sys/block/' + device2 + '/device/name').read()
+				model = open('/sys/block/' + device2 + '/device/name').read().strip()
 				model = str(model).replace('\n', '')
 			except:
 				pass
@@ -325,7 +325,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 		else:
 			mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/icons/dev_usb.png'
 			try:
-				model = open('/sys/block/' + device2 + '/device/model').read()
+				model = open('/sys/block/' + device2 + '/device/model').read().strip()
 				model = str(model).replace('\n', '')
 			except:
 				pass
@@ -357,7 +357,8 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 		if name == "USB: " and not removable and rotational:
 			mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/icons/dev_usb_drive.png'
 		try:
-			vendor = open('/sys/block/' + device2 + '/device/vendor').read()
+			vendor = open('/sys/block/' + device2 + '/device/vendor').read().strip()
+			vendor = str(vendor).replace('\n', '')
 		except:
 			vendor = ""
 		if vendor and model:
@@ -969,13 +970,13 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 			name = "MMC: "
 			card = True
 			try:
-				model = open('/sys/block/' + device2 + '/device/name').read()
+				model = open('/sys/block/' + device2 + '/device/name').read().strip()
 				model = str(model).replace('\n', '')
 			except:
 				pass
 		else:
 			try:
-				model = open('/sys/block/' + device2 + '/device/model').read()
+				model = open('/sys/block/' + device2 + '/device/model').read().strip()
 				model = str(model).replace('\n', '')
 			except:
 				pass
@@ -1006,7 +1007,8 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 		if name == "USB: " and not removable and rotational:
 			mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/MountManager/icons/dev_usb_drive.png'
 		try:
-			vendor = open('/sys/block/' + device2 + '/device/vendor').read()
+			vendor = open('/sys/block/' + device2 + '/device/vendor').read().strip()
+			vendor = str(vendor).replace('\n', '')
 		except:
 			vendor = ""
 		if vendor and model:
