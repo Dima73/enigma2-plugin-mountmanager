@@ -200,7 +200,7 @@ class DevicesMountPanel(Screen, ConfigListScreen):
 				continue
 			device = parts[3]
 			mmc = False
-			if MODEL_NAME in ('Zgemma', 'sfx6008', 'sf8008', 'sf5008', 'sf8008m', 'et13000', 'et11000', 'et1x000', 'duo4k', 'duo4kse', 'uno4k', 'uno4kse', 'ultimo4k', 'solo4k', 'zero4k', 'hd51', 'hd52', 'dm820', 'dm7080', 'sf4008', 'dm900', 'dm920', 'gbquad4k', 'gbue4k', 'lunix3-4k', 'lunix-4k', 'vs1500', 'h7', '8100s', 'e4hd', 'gbmv200', 'multibox', 'multiboxse', 'h9se', 'h11', 'h9combo', 'h9combose', 'h9twin', 'h9twinse', 'h10', 'v8plus', 'hd60', 'hd61', 'hd66se', 'pulse4k', 'pulse4kmini', 'dual') and search('mmcblk0p[1-9]', device):
+			if MODEL_NAME in ('Zgemma', 'sfx6008', 'sf8008', 'sf5008', 'sf8008m', 'et13000', 'et11000', 'et1x000', 'duo4k', 'duo4kse', 'uno4k', 'uno4kse', 'ultimo4k', 'solo4k', 'zero4k', 'hd51', 'hd52', 'dm820', 'dm7080', 'sf4008', 'dm900', 'dm920', 'gbtrio4k', 'gbquad4kpro', 'gbquad4k', 'gbue4k', 'lunix3-4k', 'lunix-4k', 'vs1500', 'h7', '8100s', 'e4hd', 'gbmv200', 'multibox', 'multiboxse', 'h9se', 'h11', 'h9combo', 'h9combose', 'h9twin', 'h9twinse', 'h10', 'h17', 'v8plus', 'hd60', 'hd61', 'hd66se', 'pulse4k', 'pulse4kmini', 'dual') and search('mmcblk0p[1-9]', device):
 				continue
 			if MODEL_NAME in ('xc7439', 'osmio4k', 'osmio4kplus', 'osmini4k') and search('mmcblk1p[1-9]', device):
 				continue
@@ -856,7 +856,7 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 				continue
 			device = parts[3]
 			mmc = False
-			if MODEL_NAME in ('Zgemma', 'sfx6008', 'sf8008', 'sf5008', 'sf8008m', 'et13000', 'et11000', 'et1x000', 'duo4k', 'duo4kse', 'uno4k', 'uno4kse', 'ultimo4k', 'solo4k', 'zero4k', 'hd51', 'hd52', 'dm820', 'dm7080', 'sf4008', 'dm900', 'dm920', 'gbquad4k', 'gbue4k', 'lunix3-4k', 'lunix-4k', 'vs1500', 'h7', '8100s', 'e4hd', 'gbmv200', 'multibox', 'multiboxse', 'h9se', 'h11', 'h9combo', 'h9combose', 'h9twin', 'h9twinse', 'h10', 'v8plus', 'hd60', 'hd61', 'hd66se', 'pulse4k', 'pulse4kmini', 'dual') and search('mmcblk0p[1-9]', device):
+			if MODEL_NAME in ('Zgemma', 'sfx6008', 'sf8008', 'sf5008', 'sf8008m', 'et13000', 'et11000', 'et1x000', 'duo4k', 'duo4kse', 'uno4k', 'uno4kse', 'ultimo4k', 'solo4k', 'zero4k', 'hd51', 'hd52', 'dm820', 'dm7080', 'sf4008', 'dm900', 'dm920', 'gbtrio4k', 'gbquad4kpro', 'gbquad4k', 'gbue4k', 'lunix3-4k', 'lunix-4k', 'vs1500', 'h7', '8100s', 'e4hd', 'gbmv200', 'multibox', 'multiboxse', 'h9se', 'h11', 'h9combo', 'h9combose', 'h9twin', 'h9twinse', 'h10', 'h17', 'v8plus', 'hd60', 'hd61', 'hd66se', 'pulse4k', 'pulse4kmini', 'dual') and search('mmcblk0p[1-9]', device):
 				continue
 			if MODEL_NAME in ('xc7439', 'osmio4k', 'osmio4kplus', 'osmini4k') and search('mmcblk1p[1-9]', device):
 				continue
@@ -1176,6 +1176,8 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 			elif self.device_tmp[3].startswith('UUID='):
 				self.device_uuid = self.device_tmp[3].replace('"', "")
 				self.device_uuid = self.device_uuid.replace('\n', "")
+			else:
+				return
 			flashexpander = None
 			if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/plugin.pyo") or fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/plugin.pyc"):
 				try:
@@ -1399,6 +1401,7 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 			print("[MountManager] error get UUID for device %s" % self.device)
 			return
 		self.device_tmp = result.split(' ')
+		self.device_uuid = self.device_type = ""
 		if str(self.device_tmp) != "['']":
 			if self.device_tmp[0].startswith('UUID='):
 				self.device_uuid = self.device_tmp[0].replace('"', "")
@@ -1433,8 +1436,20 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 					self.device_type = self.device_tmp[4].replace('TYPE=', "")
 					self.device_type = self.device_type.replace('"', "")
 					self.device_type = self.device_type.replace('\n', "")
+				elif self.device_tmp[5].startswith('TYPE='):
+					self.device_type = self.device_tmp[4].replace('TYPE=', "")
+					self.device_type = self.device_type.replace('"', "")
+					self.device_type = self.device_type.replace('\n', "")
+				elif self.device_tmp[6].startswith('TYPE='):
+					self.device_type = self.device_tmp[4].replace('TYPE=', "")
+					self.device_type = self.device_type.replace('"', "")
+					self.device_type = self.device_type.replace('\n', "")
 			except:
 				self.device_type = 'auto'
+
+			if not self.device_type or not self.device_uuid:
+				print("[MountManager] error reding UUID/TYPE device")
+				return
 
 			if self.device_type.startswith('ext'):
 				self.device_type = 'auto'
