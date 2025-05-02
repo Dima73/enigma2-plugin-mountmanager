@@ -1436,14 +1436,6 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 					self.device_type = self.device_tmp[4].replace('TYPE=', "")
 					self.device_type = self.device_type.replace('"', "")
 					self.device_type = self.device_type.replace('\n', "")
-				elif self.device_tmp[5].startswith('TYPE='):
-					self.device_type = self.device_tmp[4].replace('TYPE=', "")
-					self.device_type = self.device_type.replace('"', "")
-					self.device_type = self.device_type.replace('\n', "")
-				elif self.device_tmp[6].startswith('TYPE='):
-					self.device_type = self.device_tmp[4].replace('TYPE=', "")
-					self.device_type = self.device_type.replace('"', "")
-					self.device_type = self.device_type.replace('\n', "")
 			except:
 				self.device_type = 'auto'
 
