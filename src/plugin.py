@@ -1061,7 +1061,7 @@ class DeviceMountPanelConf(Screen, ConfigListScreen):
 			choices.append(('/media/mmc', '/media/mmc'))
 			choices.append(('/media/mmc1', '/media/mmc1'))
 			choices.append(('/media/mmc2', '/media/mmc2'))
-		if not fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/plugin.pyo") or not fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/plugin.pyc"):
+		if not (fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/plugin.pyo") or fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Flashexpander/plugin.pyc")):
 			if (removable and rotational) or (not removable and not rotational and card):
 				choices.append(('/usr', '/usr'))
 		item = NoSave(ConfigSelection(default='/media/' + device, choices=choices))
